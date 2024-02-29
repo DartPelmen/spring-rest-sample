@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.festu.ivankuznetsov.eventsapp.model.Event;
+import edu.festu.ivankuznetsov.eventsapp.model.User;
 import edu.festu.ivankuznetsov.eventsapp.service.EventService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -30,7 +33,14 @@ public class EventController {
     public List<Event> get(){
         return eventService.getEvents();
     }
-
+    @GetMapping("/getByUser")
+    public List<Event> getByUser(@RequestBody User user){
+        return eventService.getByUser(user);
+    }
+    public String getMethodName(@RequestParam String param) {
+        return new String();
+    }
+    
     @PostMapping("/addEvent")
     public Event addEvent(@RequestBody Event event){
         eventService.addEvent(event);

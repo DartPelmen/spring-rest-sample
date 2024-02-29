@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -29,6 +31,7 @@ public class Event {
     @Column(name = "eventDescription", nullable = true)
     String description;
     
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         schema = "events",
@@ -37,13 +40,6 @@ public class Event {
         inverseJoinColumns = @JoinColumn(name = "userId")
     )
     Set<User> users;
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
 
     public Event() {
         id = UUID.randomUUID();
@@ -93,4 +89,12 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
 }

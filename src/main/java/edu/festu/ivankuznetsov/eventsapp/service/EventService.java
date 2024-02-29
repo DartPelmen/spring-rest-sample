@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import edu.festu.ivankuznetsov.eventsapp.model.Event;
+import edu.festu.ivankuznetsov.eventsapp.model.User;
 import edu.festu.ivankuznetsov.eventsapp.repository.EventsRepository;
 
 @Service
@@ -34,5 +35,9 @@ public class EventService {
 
     public void deleteById(UUID id){
         eventsRepository.deleteById(id);
+    }
+
+    public List<Event> getByUser(User user) {
+        return eventsRepository.findByUsersContaining(user);
     }
 }
