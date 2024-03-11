@@ -16,7 +16,6 @@ import edu.festu.ivankuznetsov.eventsapp.repository.UserRepository;
 import edu.festu.ivankuznetsov.eventsapp.security.AuthDetails;
 import edu.festu.ivankuznetsov.eventsapp.security.SecurityConfig;
 
-import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService  {
@@ -49,6 +48,7 @@ public class UserService implements UserDetailsService  {
         var role = new Role();
         role.setRoleName("USER");
         user.setRole(Set.of(role));
+
         return userRepository.save(user);
    }
 }

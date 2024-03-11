@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -41,6 +42,18 @@ public class User {
         inverseJoinColumns = @JoinColumn(name = "roleName")
     )
     Set<Role> roles;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private UserData userData;
+    
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
+    }
 
     public UUID getIdUser() {
         return idUser;
