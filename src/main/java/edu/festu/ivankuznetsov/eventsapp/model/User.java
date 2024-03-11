@@ -3,8 +3,11 @@ package edu.festu.ivankuznetsov.eventsapp.model;
 import java.util.Set;
 import java.util.UUID;
 
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -17,69 +20,81 @@ import jakarta.persistence.Table;
 @Table(name = "users", schema = "auth", catalog = "events_database")
 public class User {
     @Id
-    UUID idUser;
+    private UUID idUser;
+    @Column(unique = true)
     private String email;
-    private String firstName;
-    private String lastName;
-    @Column(nullable = true)
-    private String patronymic;
+    @Column
     private String password;
+    @Column
+    private Boolean isActive;
+    @Column
+    private Boolean isLocked;
+    @Column
+    private Boolean isExpired;
     
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
-        schema = "events",
-        name = "events_users",
+        schema = "auth",
+        name = "user_roles",
         joinColumns = @JoinColumn(name = "userId"),
-        inverseJoinColumns = @JoinColumn(name = "eventId")
+        inverseJoinColumns = @JoinColumn(name = "roleName")
     )
-    Set<Event> events;
-    
+    Set<Role> roles;
 
-    public User() {
-        idUser = UUID.randomUUID();
-    }
     public UUID getIdUser() {
         return idUser;
     }
+
     public void setIdUser(UUID idUser) {
         this.idUser = idUser;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getFirstName() {
-        return firstName;
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    public String getPatronymic() {
-        return patronymic;
-    }
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public Set<Event> getEvents() {
-        return events;
+    public Boolean getIsActive() {
+        return isActive;
     }
-    public void setEvents(Set<Event> events) {
-        this.events = events;
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public Boolean getIsLocked() {
+        return isLocked;
+    }
+
+    public void setIsLocked(Boolean isLocked) {
+        this.isLocked = isLocked;
+    }
+
+    public Boolean getIsExpired() {
+        return isExpired;
+    }
+
+    public void setIsExpired(Boolean isExpired) {
+        this.isExpired = isExpired;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRole(Set<Role> roles) {
+        this.roles = roles;
     }
 }

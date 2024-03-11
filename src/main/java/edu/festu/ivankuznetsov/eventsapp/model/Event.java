@@ -39,7 +39,7 @@ public class Event {
         joinColumns = @JoinColumn(name = "eventId"),
         inverseJoinColumns = @JoinColumn(name = "userId")
     )
-    Set<User> users;
+    Set<UserData> users;
 
     public Event() {
         id = UUID.randomUUID();
@@ -89,11 +89,11 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Set<User> getUsers() {
+    public Set<UserData> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(Set<UserData> users) {
         this.users = users;
     }
 
