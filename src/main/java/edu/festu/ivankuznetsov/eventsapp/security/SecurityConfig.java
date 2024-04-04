@@ -40,16 +40,16 @@ public class SecurityConfig {
                 csrf(CsrfConfigurer::disable).
                 formLogin(Customizer.withDefaults()).
                 authorizeHttpRequests(requestCustomizer->
-                    requestCustomizer
-                        // requestMatchers(HttpMethod.GET,"/getByUser").hasRole("USER").
-                        // requestMatchers("/user").hasRole("ADMIN").
-                        // requestMatchers(HttpMethod.POST, "/register").permitAll().
+                    requestCustomizer.
+                         requestMatchers(HttpMethod.GET,"/getByUser").hasRole("USER").
+                        requestMatchers("/user").hasRole("ADMIN").
+                         requestMatchers(HttpMethod.POST, "/register").permitAll().
 
-                     //   requestMatchers(HttpMethod.POST).hasRole("ADMIN").
-                        // requestMatchers(HttpMethod.DELETE).authenticated().
-                        // requestMatchers(HttpMethod.PUT).authenticated().
-                        // requestMatchers(HttpMethod.GET,"/**","/login**","/logout**").
-                        // permitAll()
+                        requestMatchers(HttpMethod.POST).hasRole("ADMIN").
+                        requestMatchers(HttpMethod.DELETE).authenticated().
+                        requestMatchers(HttpMethod.PUT).authenticated().
+                        requestMatchers(HttpMethod.GET,"/**","/login**","/logout**").
+                        permitAll()
                         .anyRequest().permitAll()
                                     
                 ).httpBasic(Customizer.withDefaults()).build();
