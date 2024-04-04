@@ -1,55 +1,38 @@
 package edu.festu.ivankuznetsov.eventsapp.controller;
 
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.festu.ivankuznetsov.eventsapp.model.Event;
 import edu.festu.ivankuznetsov.eventsapp.model.User;
 import edu.festu.ivankuznetsov.eventsapp.service.EventService;
 
-
-
-
-
-@RestController
+@Controller
 public class EventController {
-
+    
     private final EventService eventService;
     public EventController(EventService eventService){
         this.eventService = eventService;
     }
 
     @GetMapping("/")
-    public List<Event> get(){
-        return eventService.getEvents();
+    public String get(Model model){
+        model.addAttribute("events",
+            eventService.getEvents());
+        return "events";
     }
-    @GetMapping("/getByUser")
-    public List<Event> getByUser(@RequestBody User user){
-        return eventService.getByUser(user);
+    @GetMapping("/byId")
+    public String getByUser(@RequestParam(required = true) UUID id, Model model){
+        var maybeEvent = eventService.findEventById(id);
+        model.addAttribute("maybeEvent", maybeEvent);
+        return "event";
     }
     
-    @PostMapping("/addEvent")
-    public Event addEvent(@RequestBody Event event){
-        eventService.addEvent(event);
-        return event;
-    }
-    @DeleteMapping("/deleteEvent")
-    public void deleteEvent(UUID eventId){
-        eventService.deleteById(eventId);
-    }
-    @PutMapping("/updateEvent")
-    public Event updateEvent(@RequestBody Event event){
-        eventService.updateEvent(event);
-        return event;
-    }
 }

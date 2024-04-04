@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>
+            Список событий
+        </title>
+    </head>
+    <body>
+     
+        <div th:if = "${maybeEvent.isPresent()}" id="eventContainer" class="eventCard">
+                    <h3 th:text = "${maybeEvent.get().name}"></h3>
+                    <h4 th:text = "'Описание: '+${maybeEvent.get().description}"></h4>
+                    <p th:text = "'Дата начала: '+${maybeEvent.get().startDate.toString()}"></p>
+                    <p th:text = "'Дата начала: '+${maybeEvent.get().endDate.toString()}"></p>
+                    <h5>====================</h5>
+        </div>
+        <div th:unless = "${maybeEvent.isPresent()}" id="eventContainer" class="eventCard">
+            <h1>Событие не найдено</h1>
+            <h5>====================</h5>
+</div>  
+    </body>
+</html>
